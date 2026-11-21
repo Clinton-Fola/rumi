@@ -175,6 +175,9 @@ final class Bridge: NSObject, WKScriptMessageHandlerWithReply {
             DispatchQueue.global(qos: .userInitiated).async { done(emptyTrashJSON()) }
         case "/api/rescan":
             S.startScan(); done(["ok": true])
+        case "/api/run-cleanup":   // one of Rumi's own clean-up commands (Cleanup.swift), by name
+            if REVIEW { return done(["ok": true, "freed": 1_200_000_000]) }
+            DispatchQueue.global(qos: .userInitiated).async { done(Cleanup.json(body["cmd"] as? String ?? "")) }
         case "/api/disk":   // show another disk; the page starts over once this answers
             DispatchQueue.global(qos: .userInitiated).async { done(["ok": Disks.use(body["id"] as? String ?? "")]) }
         case "/native/open-privacy":

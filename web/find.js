@@ -85,5 +85,7 @@ $("f-q").addEventListener("keydown", e => {
   else if (e.key === "Enter") { e.preventDefault(); findEnter(findMode(e)); }
   else if (e.key === "Escape") { e.preventDefault(); findClose(); }
 });
+// a click anywhere in the panel but the field leaves the typing where it is (and Esc still closes)
+document.querySelector(".fbox").addEventListener("mousedown", e => { if (e.target.id !== "f-q") e.preventDefault(); });
 $("f-list").addEventListener("mousemove", e => { const r = e.target.closest(".fr"); if (r && +r.dataset.i !== F.sel) { F.sel = +r.dataset.i; findMove(0); } });
 $("f-list").addEventListener("click", e => { const r = e.target.closest(".fr"); if (r) findGo(F.items[+r.dataset.i], e.target.closest(".ffind") ? "finder" : findMode(e)); });

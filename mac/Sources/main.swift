@@ -436,6 +436,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, WKNa
     }
 }
 
+// `Rumi --check-cleanup`: which clean-up tools Rumi can find, and that it can run one (asking a tool for its version only;
+// nothing is cleaned).
+if CommandLine.arguments.contains("--check-cleanup") {
+    for (cmd, argv) in Cleanup.COMMANDS.sorted(by: { $0.key < $1.key }) { print(cmd, "→", Cleanup.find(argv[0]) ?? "not found") }
+    if let x = Cleanup.find("xcrun") { let r = Cleanup.run(x, ["--version"]); print("ran xcrun --version:", r.ok, r.said) }
+    if let x = Cleanup.find("pnpm") { let r = Cleanup.run(x, ["--version"]); print("ran pnpm --version:", r.ok, r.said) }
+    print("unknown command:", Cleanup.json("rm -rf ~")["error"] ?? "")
+    exit(0)
+}
+
 // `Rumi --check-alert`: what the low-space alert does through a made-up week (free space in GB on a 245 GB disk, one look a row).
 if CommandLine.arguments.contains("--check-alert") {
     let total = Int64(245e9)

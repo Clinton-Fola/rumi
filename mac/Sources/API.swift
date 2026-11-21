@@ -158,7 +158,7 @@ extension Store {
         }
         func how(_ title: String, _ why: String, _ path: String, _ size: Int64, _ safety: String, cmd: String? = nil, steps: [String]) {
             var h: [String: Any] = ["steps": steps]
-            if let c = cmd { h["cmd"] = c }
+            if let c = cmd { h["cmd"] = c; h["run"] = Cleanup.COMMANDS[c] != nil }
             add("How to", title, why, path, size, safety, ["kind": "dir", "act": "how", "how": h])
         }
         // The tree is read under the lock (a trash edits it). The slow lookups (app names, what's running, last-used dates)
@@ -259,19 +259,19 @@ extension Store {
             }
         }
 
-        // ---- things Rumi shows you how to clear, and doesn't clear itself ----
-        // A tool's own cleanup can't be undone, so Rumi gives the command and leaves running it to you.
+        // ---- things that can't go to the Trash ----
+        // A tool's own cleanup can't be undone. Rumi gives the command, and runs it if asked (Cleanup.swift, `run`).
         if let n = get("Library/pnpm/store") {
             how("pnpm store", "Shared with your projects", n.path, n.size, "safe",
-                cmd: "pnpm store prune", steps: ["Run this in Terminal.", "It removes packages no project uses. It can't be undone."])
+                cmd: "pnpm store prune", steps: ["Run it here, or copy it into Terminal.", "It removes packages no project uses. It can't be undone."])
         }
         if let n = get("go/pkg/mod") {
             how("Go module downloads", "Downloaded again when a project needs them", n.path, n.size, "safe",
-                cmd: "go clean -modcache", steps: ["Run this in Terminal.", "Go downloads modules again on the next build. It can't be undone."])
+                cmd: "go clean -modcache", steps: ["Run it here, or copy it into Terminal.", "Go downloads modules again on the next build. It can't be undone."])
         }
         if let n = get("Library/Developer/CoreSimulator/Devices") {
             how("iPhone simulators", "Old ones can go", n.path, n.size, "review",
-                cmd: "xcrun simctl delete unavailable", steps: ["Run this in Terminal.", "It removes simulators for versions you no longer have. Their test data goes too."])
+                cmd: "xcrun simctl delete unavailable", steps: ["Run it here, or copy it into Terminal.", "It removes simulators for versions you no longer have. Their test data goes too."])
         }
         // A virtual machine an app keeps in its data folder (a disk image of 2 GB or more) is often the biggest single thing
         // there. It can hold your work, and the app has to be the one to remove or rebuild it.
@@ -303,6 +303,13 @@ extension Store {
                 add("Large & old", (b.path as NSString).lastPathComponent, "\(kind) · \(Int(age / 30)) months old", b.path, b.alloc, "review")
             }
         }
+        // data folders named after an app's id: which of them are leftovers is worked out once the lock is let go
+        var named: [(id: String, path: String, size: Int64, mtime: Double)] = []
+        if Disks.current.mac {
+            for rel in Leftovers.PLACES {
+                for ch in get(rel)?.dirs ?? [] { if let id = Leftovers.appID(ofFolder: ch.name), ch.size > 0 { named.append((id, ch.path, ch.size, ch.mtime)) } }
+            }
+        }
         let apps = idx["/Applications"].map { a in a.dirs.sorted(by: { $0.size > $1.size }).prefix(12).filter { $0.name.hasSuffix(".app") }.map { ($0.name, $0.path, $0.size) } } ?? []
         let installed = (idx["/Applications"]?.dirs ?? []).filter { $0.name.hasSuffix(".app") }.map { $0.path }
         let scan = finished
@@ -332,12 +339,21 @@ extension Store {
         // Homebrew keeps every old version of what it installs, outside the folders Rumi maps
         if let (cellar, size) = brewOld(scan) {
             how("Homebrew old versions", "Kept after every update", cellar, size, "safe",
-                cmd: "brew cleanup", steps: ["Run this in Terminal.", "It removes old versions and downloads. It can't be undone."])
+                cmd: "brew cleanup", steps: ["Run it here, or copy it into Terminal.", "It removes old versions and downloads. It can't be undone."])
         }
         for (name, path, size) in apps {
             if let last = lastUsed(path), (now - last) / 86400 > 120 {
                 add("Apps", String(name.dropLast(4)), "Unused \(Int((now - last) / 86400 / 30)) months", path, size, "review", ["kind": "app"])
             }
+        }
+        // what deleted apps left behind (Leftovers.swift): one row per app, every folder of its data in it. A cache row
+        // for something inside one of those folders would offer the same bytes twice, so it goes
+        for l in Leftovers.find(named, now: now) {
+            guard let first = l.parts.first?["path"] as? String else { continue }
+            let months = Int((now - l.newest) / 86400 / 30)
+            guard add("Leftovers", Leftovers.name(l.id), "Its app is gone · untouched \(months) month\(months == 1 ? "" : "s")", first, l.size, "review", ["kind": "dir", "parts": l.parts, "id": l.id]) else { continue }
+            let roots = l.parts.compactMap { $0["path"] as? String }
+            out.removeAll { r in r["group"] as? String == "Caches" && roots.contains { root in (r["path"] as? String ?? "").hasPrefix(root + "/") } }
         }
         // an app that's open has to quit before its caches go
         let running = runningApps()

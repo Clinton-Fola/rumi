@@ -160,6 +160,7 @@ final class QuickSearch: NSObject, NSWindowDelegate, WKNavigationDelegate {
         let size = QuickSearch.size
         let p = QuickPanel(contentRect: NSRect(origin: .zero, size: size), styleMask: [.borderless, .nonactivatingPanel], backing: .buffered, defer: false)
         p.isFloatingPanel = true
+        p.appearance = NSAppearance(named: .aqua)   // the panel is a light surface whatever the Mac's appearance
         p.level = .popUpMenu
         p.backgroundColor = .clear
         p.isOpaque = false

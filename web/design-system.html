@@ -66,7 +66,7 @@
     <div class="rule"><span class="no">3</span><div><b>Every mark means one thing.</b><p><b>Colour</b> is the kind of content; a folder takes the colour of most of what's inside. <b>A tab</b> in the outline means folder: it opens. <b>The stripe</b> on a folder shows the mix inside. <b>An icon</b> is an app. <b>A white outlined area</b> is an opened folder. <b>A tray of spines</b> is the small leftovers. <b>Graphite</b> is macOS, locked. <b>A dashed slot</b> is something gone. <b>Pink</b> (<code>--accent</code>) is what you've picked and the one main button. In the Changed view only, colour says which way a thing went: orange grew, green shrank. Nothing is decoration.</p></div></div>
     <div class="rule"><span class="no">4</span><div><b>Filters bring things forward, never fade them.</b><p>A filter changes what the map shows. Never dim the rest as a way to filter.</p></div></div>
     <div class="rule"><span class="no">5</span><div><b>Every control shows its state.</b><p>Rest, hover, open (its menu or panel is showing), on (applied). Open and on can be true at once and must look different from each other.</p></div></div>
-    <div class="rule"><span class="no">6</span><div><b>Motion is quick and never in the way.</b><p>Only transform and opacity move. 120–320 ms, easing out. Input is never blocked: a click mid-motion finishes the motion and acts.</p></div></div>
+    <div class="rule"><span class="no">6</span><div><b>Motion is quick and never in the way.</b><p>Only transform and opacity move. Mostly 120–340 ms, easing out; the tray and the first-run intro take a little longer. Input is never blocked: a click mid-motion finishes the motion and acts.</p></div></div>
   </section>
 
   <section class="ds-s" id="colour">
@@ -113,7 +113,7 @@
       <div class="state"><span class="lab">Small</span><button class="btn small">Show in Finder</button></div>
       <div class="state"><span class="lab">Ghost</span><button class="btn ghost">Cancel</button></div>
     </div>
-    <div class="spec"><b>Label:</b> a verb, two words at most. <b>Radius</b> <code>--r-md</code> · <b>weight</b> 700.</div>
+    <div class="spec"><b>Label:</b> a verb, three words at most. <b>Radius</b> <code>--r-md</code> · <b>weight</b> 700.</div>
   </section>
 
   <section class="ds-s" id="chips">
@@ -164,6 +164,9 @@
     <h3 class="ds-h">What is this? (ask Rumi)</h3>
     <p class="lead">The answer is for the moment you wonder, so nothing about it is on screen until then. A folder Rumi has something to say about gets a small <b>?</b> beside its + while the pointer or the keyboard is on it. Click it (or press <kbd>?</kbd>, or right-click › What Is This?) and the big Rumi from the Bin screen says what the folder is, what to do, and one of three answers.</p>
     <div class="spec"><b>The ?:</b> the same small white button as the +, never shown at rest, no text. <b>No ?:</b> Rumi has no line for that folder; it never guesses. <b>The screen:</b> three lines, each on a single line. The headline says what the folder is, like a name ("Temporary files", "iCloud Drive"; about 18 letters at most). Under it one short reason ("Apps make new ones."; 38 at most) that never repeats the answer. Then the answer in a ring: green "Safe to delete", amber "Check first", pink "Leave it". The folder's own name and size sit small above. Rumi's face goes with the answer. <b>Keys:</b> Done, and beside it "Add to Clean up" for a safe one or "Show in Finder" for the rest. <b>Words:</b> in <code>guide.js</code>, written by hand (about 115 folders). What's inside a known folder gets that folder's line for its insides.</div>
+    <h3 class="ds-h">Leftovers, and commands Rumi runs</h3>
+    <p class="lead"><b>Leftovers</b> is a group in Clean up: data that apps no longer on this Mac left in the Library, one row per app, always "Check first", into the Bin like everything else. Rumi only judges folders named after an app's id, never macOS's own, and says nothing if the app can still be found anywhere, if anything from the same maker is installed or running, or if the data was touched in the last month. Missing a leftover is fine; calling live data a leftover is not.</p>
+    <p class="lead"><b>Run it.</b> A how-to card for a tool's own clean-up (pnpm, Go, Xcode's simulators, Homebrew) has "Run it" beside "Show in Finder". The first click turns it into "Can't be undone. Run?"; the second runs the command and the card says what came of it ("Done · 1.2 GB freed"). Only those four commands exist; Copy is still there for doing it by hand.</p>
     <h3 class="ds-h">The low-space alert</h3>
     <p class="lead">Off unless it's turned on: right-click the menu-bar cartridge, "Warn When Space Is Low". One macOS notice when the Mac falls under 10 GB free (or a twentieth of a smaller disk), with a "Show What Grew" button that opens the map on what changed. Then nothing until space has come back and fallen again, and never more than one a day. Turning it on shows one notice straight away, so you see what it looks like. The same menu's first line always says how much is free.</p>
     <div class="spec"><b>Forecast:</b> plain text after the free space, never coloured. Pointing at it (or Tab to it) shows a small chart at once: the days it was drawn from as an ink line, a pink dot for today, a dotted pink line down to full, and the dates underneath. On the disk bar, a week at this pace is hatched in pink at the edge of the free space, with the figure in the bar's hint. It shows only when free space has fallen steadily for a week or more and would run out within 60 days; otherwise there is nothing there. <b>Days</b> under two weeks, <b>weeks</b> after. <b>No date:</b> "about 3 weeks" promises less than "Dec 11".</div>
@@ -200,7 +203,7 @@
       </div>
       <button class="sc-undo" style="margin-left: 160px">Undo</button>
     </div>
-    <div class="spec"><b>The heading:</b> the total and its button share one line. What a group is sits in the hint on its name, marked by the small "i". <b>An app that's open:</b> its caches can't be picked until it quits; an orange Open tag takes the place of Safe, and the line under the name, in the same orange, says which app to quit. The row isn't dimmed. <b>App icons:</b> a row that belongs to an app keeps its cartridge; the app's icon takes the folder's place on the label. <b>Real sizes:</b> the size is what comes back. When part of it is shared with copies elsewhere, "of" gives the full size and the hint explains. <b>One row per app:</b> an app's cache folders go together. <b>How-to rows</b> can't be picked: the row (or How to, which shows on hover beside Finder) opens a card with the steps and, where there is one, the command to copy. Rumi never runs it.</div>
+    <div class="spec"><b>The heading:</b> the total and its button share one line. What a group is sits in the hint on its name, marked by the small "i". <b>An app that's open:</b> its caches can't be picked until it quits; an orange Open tag takes the place of Safe, and the line under the name, in the same orange, says which app to quit. The row isn't dimmed. <b>App icons:</b> a row that belongs to an app keeps its cartridge; the app's icon takes the folder's place on the label. <b>Real sizes:</b> the size is what comes back. When part of it is shared with copies elsewhere, "of" gives the full size and the hint explains. <b>One row per app:</b> an app's cache folders go together. <b>How-to rows</b> can't be picked: the row (or How to, which shows on hover beside Finder) opens a card with the steps and, where there is one, the command to copy, or Run it for the four Rumi can run.</div>
   </section>
 
   <section class="ds-s" id="search">
@@ -212,7 +215,7 @@
       <div class="state"><span class="lab">A result, selected</span>
         <div style="width:420px"><div class="fr sel"><span class="tile" style="--c:var(--c-docs)">PDF</span><div class="fm"><b data-tip="~/Documents/Report.pdf"><mark>Rep</mark>ort.pdf</b><small>Documents</small></div><span class="num">2 MB</span><button class="ffind" data-tip="Show in Finder · ⌘↵"><svg class="i" viewBox="0 0 16 16"><path d="M9.5 2.5h4v4M13.5 2.5 8 8M12 9.5v3c0 .6-.4 1-1 1H3.5c-.6 0-1-.4-1-1V5c0-.6.4-1 1-1h3"/></svg></button></div></div></div>
     </div>
-    <div class="card-ds" style="margin-top:14px"><div class="ffoot" style="border:0;padding:0"><span><kbd>↵</kbd> open</span><span><kbd>⌘↵</kbd> show in Finder</span><span><kbd>⌥↵</kbd> show on map</span><span><kbd>esc</kbd> close</span></div></div>
+    <div class="card-ds" style="margin-top:14px"><div class="ffoot" style="border:0;padding:0"><span><kbd>↵</kbd> open</span><span><kbd>⌘↵</kbd> show in Finder</span><span><kbd>⌥↵</kbd> show on map</span><span><kbd>Esc</kbd> close</span></div></div>
     <div class="spec"><b>↵ opens the thing itself:</b> a folder on the map, a photo, video, page or code file in the viewer, anything else in its own app (from the menu bar, always in its own app). <b>⌘↵</b> shows where it is in Finder. <b>⌥↵</b> shows it on the map. <b>A row:</b> tile · name with the match marked · the folder it's in, by name · size · its own Show in Finder button. The row you're on is a neutral grey, never pink. The full path shows only when you point at the name itself (the same in the side lists). <b>Empty:</b> what you opened lately, then your biggest files.</div>
   </section>
 
@@ -222,7 +225,7 @@
     <div class="card-ds"><div class="vtop" style="padding:0;height:44px">
       <div class="vt"><b>Recipe.html</b><span class="num">4 MB · Web page · 14 of 30</span></div>
       <div class="vseg"><button class="on">Page</button><button>Code</button></div>
-      <button class="btn ghost vi">↗</button><button class="btn small primary">+ Add to Clean up</button><button class="btn ghost vi">✕</button>
+      <button class="btn">Open</button><button class="btn ghost vi" id="ds-vfinder"></button><button class="btn primary">+ Add to Clean up</button><button class="btn ghost vi">✕</button>
     </div></div>
     <div class="spec"><b>Top bar:</b> name · size · kind · position, then the tools. <b>Page / Code</b> only for web pages. <b>Web pages</b> run live but sealed: their own origin, sandboxed, no reach into Rumi. <b>Code</b> is coloured lightly (comments, strings, numbers, keywords, tags), with line numbers, first 1 MB.</div>
   </section>
@@ -279,17 +282,17 @@ $("sw-sig").innerHTML = [["--accent", "Accent", "picked to remove, the main butt
 
 // type
 $("type-rows").innerHTML = [
-  ["Hero number", "52 / 800 / −0.045em", `<span class="num" style="font-size:52px;font-weight:800;letter-spacing:-.045em;line-height:1">128.4<small style="font-size:22px;color:var(--dim);margin-left:3px">GB</small></span>`],
-  ["Panel number", "34 / 800", `<span class="num" style="font-size:34px;font-weight:800;letter-spacing:-.03em">32.5 GB</span>`],
+  ["Hero number", "34 / 800 / −0.045em", `<span class="num" style="font-size:34px;font-weight:800;letter-spacing:-.045em;line-height:1">128.4<small style="font-size:15px;color:var(--faint);font-weight:700;margin-left:6px">GB</small></span>`],
+  ["Panel number", "26 / 800", `<span class="num" style="font-size:26px;font-weight:800;letter-spacing:-.03em">32.5 GB</span>`],
   ["Title", "15 / 800", `<span style="font-size:15px;font-weight:800">Downloads</span>`],
   ["Body", "13 / 500", `<span>Quit Sandbox first · it may download again</span>`],
   ["Label (cartridge)", "12.5 / 800", `<span style="font-size:12.5px;font-weight:800">Archive (7).zip</span>`],
-  ["Small", "12 / 600", `<span style="font-size:12px;font-weight:600;color:var(--dim)">1,204 files</span>`],
-  ["Caption", "11 / 800 / caps", `<span style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)">Show only</span>`],
+  ["Small", "12 / 700", `<span style="font-size:12px;font-weight:700;color:var(--dim)">1,204 files</span>`],
+  ["Caption", "11 / 800 / caps", `<span style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)">Locked</span>`],
 ].map(([n, s, ex]) => `<div class="type-row"><div><div style="font-weight:800">${n}</div><div class="spec">${s}</div></div><div>${ex}</div></div>`).join("");
 
 // shape
-$("radii").innerHTML = [["--r-xs", "tick boxes"], ["--r-sm", "small cartridges, kbd"], ["--r-md", "buttons, tiles"], ["--r-lg", "cards, menus, the map"], ["--r-pill", "chips, tags"]]
+$("radii").innerHTML = [["--r-xs", "tags, tick boxes"], ["--r-sm", "small buttons, kbd"], ["--r-md", "buttons, tiles"], ["--r-lg", "menus, hover cards"], ["--r-pill", "chips"]]
   .map(([v, u]) => `<div><div style="height:64px;background:var(--panel);box-shadow:0 0 0 1.5px var(--line2);border-radius:var(${v})"></div><div class="sw-n">${css(v)}</div><div class="sw-v">${v}</div><div class="spec" style="margin-top:2px">${u}</div></div>`).join("");
 
 // motion
@@ -335,12 +338,12 @@ const carts = [
   ["Hover", "lifts, + appears", cart({ w: 150, h: 110, cat: "docs", name: "Recipe.html", size: "4 MB", cls: "hov" })],
 ];
 $("carts").innerHTML = carts.map(([n, u, h]) => `<div><div class="stage" style="height:170px">${h}</div><div class="spec"><b>${n}</b> · ${u}</div></div>`).join("");
-document.querySelectorAll(".b.hov").forEach(b => { b.style.filter = "brightness(1.04)"; b.querySelector(".pick").style.display = "grid"; });
+document.querySelectorAll(".b.hov").forEach(b => { b.style.transform = "translateY(-3px)"; b.querySelector(".pick").style.display = "grid"; });
 
 // rows
 const tile = c => `<span class="tile" style="--c:var(--c-${c})">${FOLDER}</span>`;
 const row = (t, tag, why, size, on, tip) => `<div class="row" style="${on ? "" : ""}"><input type="checkbox" ${on ? "checked" : ""}>${tile("cache")}<div class="nm" data-tip="${tip || ""}"><div class="t"><span class="tt">${t}</span>${tag}</div>${why ? `<div class="why">${why}</div>` : ""}</div><div class="sz num">${size}</div></div>`;
-$("rows-demo").innerHTML = `<div class="grp"><span class="t">Caches</span><span class="s num">27.3 GB</span><span class="d">Rebuilt automatically</span></div>`
+$("rows-demo").innerHTML = `<div class="grp" data-tip="Rebuilt automatically"><span class="t">Caches</span><span class="s num">27.3 GB</span><span class="info"><svg class="i" viewBox="0 0 16 16" style="width:13px;height:13px"><circle cx="8" cy="8" r="6"/><path d="M8 7.3v3.7M8 5.2v.1"/></svg></span></div>`
   + row("Old exports", `<span class="tag review">Check first</span>`, "Untouched 120 days", "9.4 GB", true)
   + row("Browser", `<span class="tag safe">Safe</span>`, "", "5.10 GB", false, "~/Library/Caches/Browser")
   + row("Notes", `<span class="tag safe">Safe</span>`, "", "3.20 GB", false, "~/Library/Caches/com.example.notes")
@@ -362,8 +365,9 @@ $("clean-demo").innerHTML = `<div class="intro"><span class="bignum num" data-ti
 $("bin-demo-face").innerHTML = Rumi.face("happy", 84);
 $("bin-demo-disk").innerHTML = Array.from({ length: 26 }, (_, i) => `<i class="${i < 22 ? "dk-u" : i < 23 ? "dk-b" : ""}"></i>`).join("");
 $("how-demo").innerHTML = `<div class="ih">${tile("dev")}<div style="min-width:0"><div class="n">Package store</div><div class="s num">1.9 GB</div></div><button class="x" aria-label="Close"><svg class="i" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div>
-  <ol class="steps"><li>Run this in Terminal.<div class="cmd"><code>tool store prune</code><button class="btn small">Copy</button></div></li><li>It removes packages no project uses. It can't be undone.</li></ol>
-  <div class="a"><button class="btn">${ICON.finder}Show in Finder</button></div>`;
+  <ol class="steps"><li>Run it here, or copy it into Terminal.<div class="cmd"><code>tool store prune</code><button class="btn small">Copy</button></div></li><li>It removes packages no project uses. It can't be undone.</li></ol>
+  <div class="a"><button class="btn">${ICON.finder}Show in Finder</button><button class="btn primary">Run it</button></div>`;
+$("ds-vfinder").innerHTML = ICON.finder;
 
 // what changed: the since chip and the four cartridges of the Changed view
 const since = (cls, col, amt) => `<button class="chip ${cls}" style="margin:0"><i style="background:var(${col})"></i><b class="num">${amt}</b> since Friday</button>`;
