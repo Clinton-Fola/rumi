@@ -2,6 +2,8 @@
 
 A Mac app for managing disk space, searching for files, and giving you better control over your storage.
 
+![Rumi's window: the disk drawn as cartridges, with the Clean up list beside it](docs/window.png)
+
 ![Rumi's cartridges: a file, a folder, small and narrow ones, an open folder, the small stuff, and what macOS uses](docs/cartridges.png)
 
 ## What you can do with it
