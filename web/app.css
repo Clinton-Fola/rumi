@@ -44,6 +44,7 @@ header { padding: 16px 24px 18px; border-bottom: 1px solid var(--line); backgrou
 .btn.small { padding: 4px 9px; font-size: 12px; border-radius: 7px; }
 .btn.ghost { border-color: transparent; background: transparent; }
 a.btn { text-decoration: none; color: inherit; }
+.btn[hidden] { display: none; }   /* a hidden button stays hidden (the scan screen's "Back to This Mac" showed on the Mac's own scan) */
 .b .lbl .k, .b .lbl .m { display: none; }
 .b.lt .lbl, .b.lt .bigsz { color: rgba(0,0,0,.82); text-shadow: none; }
 .bigsz .u { font-size: .5em; letter-spacing: 0; opacity: .85; }
